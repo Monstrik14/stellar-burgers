@@ -4,7 +4,7 @@ import { useSelector } from '../../services/store';
 import {
   isAuthCheckedSelector,
   loginUserRequestSelector
-} from '../../services/selectors';
+} from '../../services/slices/userSlice';
 import { Preloader } from '../ui/preloader';
 
 type ProtectedRouteProps = {

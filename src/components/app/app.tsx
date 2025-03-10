@@ -3,6 +3,7 @@ import styles from './app.module.css';
 import { useDispatch } from '../../services/store';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import {
   ConstructorPage,
   Feed,
@@ -19,8 +20,7 @@ import {
   AppHeader,
   IngredientDetails,
   Modal,
-  OrderInfo,
-  ProtectedRoute
+  OrderInfo
 } from '@components';
 
 const App = () => {
