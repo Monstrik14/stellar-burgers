@@ -25,7 +25,7 @@ export const ProtectedRoute = ({
   }
 
   if (!onlyUnAuth && !isAuthChecked) {
-    return <Navigate replace to='/login' state={{ from: location }} />;
+    return <Navigate replace to='/login' state={{ from: location }} />; // в
   }
 
   if (onlyUnAuth && isAuthChecked) {

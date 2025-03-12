@@ -1,5 +1,7 @@
 import { TOrder, TUser } from '../../utils/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TRegisterData, registerUserApi } from '@api';
+import { setCookie } from 'src/utils/cookie';
 
 interface UserState {
   isAuth: boolean;
@@ -18,6 +20,18 @@ const initialState: UserState = {
   ordersRequest: false,
   error: null,
 };
+
+export const registerUserThunk = createAsyncThunk(
+  'users/registerUser',
+  async ({ email, name, password }: TRegisterData) =>
+    registerUserApi({ email, name, password }).then(
+      ({ refreshToken, accessToken, user }) => {
+        setCookie('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        return user;
+      }
+    )
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -46,19 +60,16 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(registerUserThunk.pending, (state) => {
         state.logUser = true;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.logUser = false;
         state.isAuth = true;
         state.user = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.logUser = false;
-        state.error = action.error.message;
-      });
-});
+    }
+  })
 
 export const {
   isAuthCheckedSelector,

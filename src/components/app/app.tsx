@@ -16,23 +16,17 @@ import {
   NotFound404
 } from '@pages';
 
-import {
-  AppHeader,
-  IngredientDetails,
-  Modal,
-  OrderInfo
-} from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
 const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const backgroundLocation = location.state?.background
+  const backgroundLocation = location.state?.background;
 
   useEffect(() => {
     dispatch({ type: 'GET_INGREDIENTS' });
   }, [dispatch]);
-
 
   return (
     <div className={styles.app}>
@@ -133,5 +127,3 @@ const App = () => {
 };
 
 export default App;
-
-
