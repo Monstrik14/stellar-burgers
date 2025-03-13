@@ -1,6 +1,5 @@
 import '../../index.css';
 import styles from './app.module.css';
-import { useDispatch } from '../../services/store';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -16,16 +15,19 @@ import {
   NotFound404
 } from '@pages';
 
-import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { getUserThunk } from '../../services/slices/userSlice';
 
-const App = () => {
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { useDispatch } from '../../services/store';
+
+export const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
 
   useEffect(() => {
-    dispatch({ type: 'GET_INGREDIENTS' });
+    dispatch(getUserThunk());
   }, [dispatch]);
 
   return (
@@ -125,5 +127,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;
