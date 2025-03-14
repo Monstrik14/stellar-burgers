@@ -12,8 +12,6 @@ import {
 } from '@api';
 import { TOrder, TUser } from '@utils-types';
 import { deleteCookie, setCookie } from 'src/utils/cookie';
-
-
 export interface UserState {
   isAuthenticated: boolean;
   loginUserRequest: boolean;
