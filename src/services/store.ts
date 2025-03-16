@@ -10,7 +10,7 @@ import userReducer from './slices/userSlice';
 
 const rootReducer = combineReducers({
   user: userReducer
-})
+});
 
 const store = configureStore({
   reducer: rootReducer,

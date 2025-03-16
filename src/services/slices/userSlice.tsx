@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder, TUser } from '@utils-types';
+import { deleteCookie, setCookie } from 'src/utils/cookie';
 
 import {
   getOrdersApi,
@@ -10,8 +12,7 @@ import {
   TLoginData,
   TRegisterData
 } from '@api';
-import { TOrder, TUser } from '@utils-types';
-import { deleteCookie, setCookie } from 'src/utils/cookie';
+
 export interface UserState {
   isAuthenticated: boolean;
   loginUserRequest: boolean;
@@ -42,6 +43,13 @@ export const loginUserThunk = createAsyncThunk(
     )
 );
 
+export const logoutUserThunk = createAsyncThunk('users/logoutUser', async () =>
+  logoutApi().then(() => {
+    deleteCookie('accessToken');
+    localStorage.removeItem('refreshToken');
+  })
+);
+
 export const registerUserThunk = createAsyncThunk(
   'users/registerUser',
   async ({ email, name, password }: TRegisterData) =>
@@ -52,13 +60,6 @@ export const registerUserThunk = createAsyncThunk(
         return user;
       }
     )
-);
-
-export const logoutUserThunk = createAsyncThunk('users/logoutUser', async () =>
-  logoutApi().then(() => {
-    deleteCookie('accessToken');
-    localStorage.removeItem('refreshToken');
-  })
 );
 
 export const getUserThunk = createAsyncThunk('users/getUser', getUserApi);

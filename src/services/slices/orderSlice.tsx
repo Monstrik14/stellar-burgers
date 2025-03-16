@@ -1,54 +1,55 @@
-import { getOrdersApi } from '@api';
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { orderBurgerApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 export interface OrderState {
   order: TOrder | null;
-  orderLoading: boolean;
-  orderError: string | null;
+  isOrderLoading: boolean;
+  error: string | null;
 }
 
-export const initialState: OrderState = {
+const initialState: OrderState = {
   order: null,
-  orderLoading: false,
-  orderError: null
+  isOrderLoading: false,
+  error: null
 };
 
-export const fetchOrders = createAsyncThunk(
+export const orderBurgerThunk = createAsyncThunk(
   'orders/postOrderBurger',
-  async () => {
-    await getOrdersApi();
-  }
+  async (order: string[]) => orderBurgerApi(order)
 );
 
-export const orderSlice = createSlice({
-  name: 'orders',
+const orderSlice = createSlice({
+  name: 'order',
   initialState,
   selectors: {
-    ordersSelector: (state) => state.order,
-    isLoadingSelector: (state) => state.orderLoading,
-    errorSelector: (state) => state.orderError
+    isOrderLoadingSelector: (state) => state.isOrderLoading,
+    orderSelector: (state) => state.order
   },
   reducers: {
     clearOrder: (state) => {
       state.order = null;
-      state.orderLoading = false;
-    },
-    },
-  extraReducers: (builder) => {
+      state.isOrderLoading = false;
+    }
+  },
+  extraReducers(builder) {
     builder
-      .addCase(fetchOrders.pending, (state) => {
-        state.orderLoading = true;
+      .addCase(orderBurgerThunk.pending, (state) => {
+        state.isOrderLoading = true;
       })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.orderLoading = false;
-        state.order = action.payload;
+      .addCase(orderBurgerThunk.rejected, (state, action) => {
+        state.isOrderLoading = false;
+        state.error = action.error.message!;
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
-        state.orderLoading = false;
-        state.orderError = action.error.message!;
+      .addCase(orderBurgerThunk.fulfilled, (state, action) => {
+        state.isOrderLoading = false;
+        state.order = action.payload.order;
       });
   }
 });
+
+export const { clearOrder } = orderSlice.actions;
+
+export const { isOrderLoadingSelector, orderSelector } = orderSlice.selectors;
 
 export default orderSlice.reducer;
