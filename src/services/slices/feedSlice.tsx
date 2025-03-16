@@ -1,6 +1,7 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TOrder } from "@utils-types";
 import { RootState } from "../store";
+import { getOrderByNumberApi } from "@api";
 
 export interface FeedState {
   orders: TOrder[];
@@ -15,12 +16,8 @@ const initialState: FeedState = {
 };
 
 export const fetchFeed = createAsyncThunk(
-  'feed/fetchFeed',
-  async () => {
-    const response = await fetch('https://norma.nomoreparties.space/api/orders');
-    const data = await response.json();
-    return data;
-  }
+  'orders/getOrder',
+  async (number: number) => getOrderByNumberApi(number)
 );
 
 export const feedSlice = createSlice({
@@ -36,8 +33,8 @@ export const feedSlice = createSlice({
       .addCase(fetchFeed.pending, (state) => {
         state.isOrdersLoading = true;
       })
-      .addCase(fetchFeed.fulfilled, (state, action: PayloadAction<TOrder[]>) => {
-        state.orders = action.payload;
+      .addCase(fetchFeed.fulfilled, (state, action) => {
+        state.orders = action.payload.orders;
         state.isOrdersLoading = false;
       })
       .addCase(fetchFeed.rejected, (state) => {
@@ -47,10 +44,6 @@ export const feedSlice = createSlice({
   }
 });
 
-export const feedSelector = (state: RootState) => state.feed
-
-export const { reducer: feedReducer } = feedSlice
-
 export const { isOrdersLoadingSelector, ordersSelector } = feedSlice.selectors
 
-export default feedReducer
+export default feedSlice.reducer
