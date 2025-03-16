@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TOrder } from "@utils-types";
-import { RootState } from "../store";
-import { getOrderByNumberApi } from "@api";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder } from '@utils-types';
+import { RootState } from '../store';
+import { getOrderByNumberApi } from '@api';
 
 export interface FeedState {
   orders: TOrder[];
@@ -44,6 +44,6 @@ export const feedSlice = createSlice({
   }
 });
 
-export const { isOrdersLoadingSelector, ordersSelector } = feedSlice.selectors
+export const { isOrdersLoadingSelector, ordersSelector } = feedSlice.selectors;
 
-export default feedSlice.reducer
+export default feedSlice.reducer;
