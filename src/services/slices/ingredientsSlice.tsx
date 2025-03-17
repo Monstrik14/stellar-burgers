@@ -1,16 +1,14 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TIngredient } from "@utils-types";
-import { getIngredientsApi } from "@api";
-
-
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils-types';
+import { getIngredientsApi } from '@api';
 
 export interface IngredientDetails {
-  ingredients: TIngredient[],
-  isLoading: boolean,
+  ingredients: TIngredient[];
+  isLoading: boolean;
   bun: {
-    price: 0
-  }, 
-  error: string | null
+    price: 0;
+  };
+  error: string | null;
 }
 
 export const initialState: IngredientDetails = {
@@ -20,15 +18,15 @@ export const initialState: IngredientDetails = {
     price: 0
   },
   error: null
-}
+};
 
-export const fetchIngredients = createAsyncThunk (
+export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
   async () => {
     const ingredients = await getIngredientsApi();
     return ingredients;
   }
-)
+);
 
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
@@ -36,19 +34,21 @@ export const ingredientsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(fetchIngredients.pending, (state) => {
-      state.isLoading = true;
-    })
-    .addCase(fetchIngredients.fulfilled, (state, action: PayloadAction<TIngredient[]>) => {
-      state.ingredients = action.payload;
-      state.isLoading = false;
-    })
-    .addCase(fetchIngredients.rejected, (state) => {
-      state.isLoading = false;
-      state.error = 'error';
-    })
-    },
-  },
-);
+      .addCase(fetchIngredients.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        fetchIngredients.fulfilled,
+        (state, action: PayloadAction<TIngredient[]>) => {
+          state.ingredients = action.payload;
+          state.isLoading = false;
+        }
+      )
+      .addCase(fetchIngredients.rejected, (state) => {
+        state.isLoading = false;
+        state.error = 'error';
+      });
+  }
+});
 
-export default ingredientsSlice.reducer
+export default ingredientsSlice.reducer;

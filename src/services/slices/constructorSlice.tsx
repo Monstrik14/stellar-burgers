@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { TConstructorIngredient } from "@utils-types";
+import { createSlice } from '@reduxjs/toolkit';
+import { TConstructorIngredient } from '@utils-types';
 
 interface ConstructorState {
   constructorIngredients: TConstructorIngredient[];
@@ -12,7 +12,7 @@ const initialState: ConstructorState = {
 };
 
 export const constructorSlice = createSlice({
-  name: "constructor",
+  name: 'constructor',
   initialState,
   reducers: {
     addIngredient: (state, action) => {
@@ -26,9 +26,10 @@ export const constructorSlice = createSlice({
     setConstructorBun: (state, action) => {
       state.constructorBun = action.payload;
     }
-  },
+  }
 });
 
-export const { addIngredient, removeIngredient, setConstructorBun } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, setConstructorBun } =
+  constructorSlice.actions;
 
 export default constructorSlice.reducer;
