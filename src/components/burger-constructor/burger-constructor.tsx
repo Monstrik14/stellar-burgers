@@ -14,11 +14,10 @@ export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(burgerConstructorSelector);
   const orderRequest = useSelector(isOrderLoadingSelector);
   const orderModalData = useSelector(orderSelector);
+  const isAuthenticated = useSelector(isAuthCheckedSelector);
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
-  const isAuthenticated = useSelector(isAuthCheckedSelector);
 
   const onOrderClick = () => {
     if (!isAuthenticated) {
