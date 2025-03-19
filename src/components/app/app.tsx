@@ -15,7 +15,7 @@ import {
   NotFound404
 } from '@pages';
 
-import { getUserThunk } from '../../services/slices/userSlice';
+import { getUserThunk } from '../../slices/userSlice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useDispatch } from '../../services/store';

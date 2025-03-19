@@ -5,7 +5,7 @@ import {
   clearErrors,
   errorSelector,
   registerUserThunk
-} from 'src/services/slices/userSlice';
+} from 'src/slices/userSlice';
 import { useForm } from 'src/hooks/useForm';
 import { AppDispatch } from 'src/services/store';
 
