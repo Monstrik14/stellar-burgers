@@ -5,8 +5,8 @@ import {
   clearErrors,
   errorSelector,
   registerUserThunk
-} from 'src/slices/userSlice';
-import { useForm } from 'src/hooks/useForm';
+} from '../../slices/userSlice';
+import { useForm } from '../../hooks/useForm';
 import { AppDispatch } from 'src/services/store';
 
 export const Register: FC = () => {
