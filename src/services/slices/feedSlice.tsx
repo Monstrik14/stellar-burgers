@@ -1,50 +1,46 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TOrder, TOrdersData } from '@utils-types';
-import { getFeedsApi, getOrderByNumberApi } from '@api';
 
-export interface FeedState {
+import { getFeedsApi } from '../../utils/burger-api';
+import { TOrder } from '../../utils/types';
+import { RootState } from '../store';
+
+export interface IFeedsState {
   orders: TOrder[];
-  isOrdersLoading: boolean;
+  isFeedsLoading: boolean;
   error: string | null;
 }
 
-const initialState: FeedState = {
+const initialState: IFeedsState = {
   orders: [],
-  isOrdersLoading: false,
+  isFeedsLoading: false,
   error: null
 };
 
-export const fetchOrders = createAsyncThunk<TOrdersData>('feed/fetchOrders', getFeedsApi)
-
-export const fetchFeed = createAsyncThunk(
-  'orders/getOrder',
-  async (number: number) => getOrderByNumberApi(number)
-);
-
 export const feedSlice = createSlice({
-  name: 'feed',
+  name: 'feeds',
   initialState,
-  selectors: {
-    isOrdersLoadingSelector: (state: FeedState) => state.isOrdersLoading,
-    ordersSelector: (state: FeedState) => state.orders
-  },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchOrders.pending, (state) => {
-        state.isOrdersLoading = true;
+        state.isFeedsLoading = true;
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.isFeedsLoading = false;
+        state.error = action.error.message!;
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.orders = action.payload.orders;
-        state.isOrdersLoading = false;
-      })
-      .addCase(fetchOrders.rejected, (state) => {
-        state.isOrdersLoading = false;
-        state.error = 'error';
+        state.isFeedsLoading = false;
+        state.orders =
+          action.payload.orders || 'Ошибка при обнолении ленты заказов';
       });
   }
 });
 
-export const { isOrdersLoadingSelector, ordersSelector } = feedSlice.selectors;
+export const fetchOrders = createAsyncThunk('feeds/fetchOrders', async () => {
+  return await getFeedsApi();
+});
 
 export default feedSlice.reducer;
+
+export const selectedOrders = (state: RootState) => state.feed.orders;

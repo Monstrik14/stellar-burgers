@@ -3,8 +3,13 @@ import { LoginUI } from '@ui-pages';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { error } from 'console';
-import { clearErrors, errorSelector, loginUserThunk } from 'src/services/slices/userSlice';
+import {
+  clearErrors,
+  errorSelector,
+  loginUserThunk
+} from '../../services/slices/userSlice';
 import { useForm } from '../../hooks/useForm';
+import { AppDispatch } from 'src/services/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -12,18 +17,18 @@ export const Login: FC = () => {
 
   const navigate = useNavigate();
   const eror = useSelector(errorSelector);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
   const { values, handleChange } = useForm({
     email: '',
     password: ''
   });
+
   const { from } = location.state || { from: { pathname: '/' } };
-  
+
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-
     dispatch(
       loginUserThunk({ email: values.email, password: values.password })
     );
@@ -32,7 +37,7 @@ export const Login: FC = () => {
 
   useEffect(() => {
     dispatch(clearErrors());
-  }, [dispatch]);
+  }, []);
 
   return (
     <LoginUI
@@ -45,4 +50,3 @@ export const Login: FC = () => {
     />
   );
 };
-
