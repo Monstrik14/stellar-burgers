@@ -2,7 +2,6 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { error } from 'console';
 import {
   clearErrors,
   errorSelector,
