@@ -1,54 +1,50 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
 import { getIngredientsApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils-types';
 
-export interface IngredientDetails {
+
+export interface IngredientsState {
   ingredients: TIngredient[];
-  isLoading: boolean;
-  bun: {
-    price: 0;
-  };
+  isIngredientsLoading: boolean;
   error: string | null;
 }
 
-export const initialState: IngredientDetails = {
+const initialState: IngredientsState = {
   ingredients: [],
-  isLoading: false,
-  bun: {
-    price: 0
-  },
+  isIngredientsLoading: false,
   error: null
 };
 
-export const fetchIngredients = createAsyncThunk(
-  'ingredients/fetchIngredients',
-  async () => {
-    const ingredients = await getIngredientsApi();
-    return ingredients;
-  }
+export const getIngredientsThunk = createAsyncThunk(
+  'ingredients/getIngredients',
+  async () => getIngredientsApi()
 );
 
-export const ingredientsSlice = createSlice({
+const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
+  selectors: {
+    ingredientsSelector: (state) => state.ingredients,
+    isIngredientsLoadingSelector: (state) => state.isIngredientsLoading
+  },
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder
-      .addCase(fetchIngredients.pending, (state) => {
-        state.isLoading = true;
+      .addCase(getIngredientsThunk.pending, (state) => {
+        state.isIngredientsLoading = true;
       })
-      .addCase(
-        fetchIngredients.fulfilled,
-        (state, action: PayloadAction<TIngredient[]>) => {
-          state.ingredients = action.payload;
-          state.isLoading = false;
-        }
-      )
-      .addCase(fetchIngredients.rejected, (state) => {
-        state.isLoading = false;
-        state.error = 'error';
+      .addCase(getIngredientsThunk.rejected, (state, action) => {
+        state.isIngredientsLoading = false;
+        state.error = action.error.message!;
+      })
+      .addCase(getIngredientsThunk.fulfilled, (state, action) => {
+        state.isIngredientsLoading = false;
+        state.ingredients = action.payload;
       });
   }
 });
+
+export const { ingredientsSelector, isIngredientsLoadingSelector } =
+  ingredientsSlice.selectors;
 
 export default ingredientsSlice.reducer;

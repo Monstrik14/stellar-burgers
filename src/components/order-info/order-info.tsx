@@ -1,33 +1,39 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useSelector } from 'react-redux';
+import { useDispatch } from '../../services/store';
+import { useParams } from 'react-router-dom';
+import { orderBurgerThunk, orderSelector } from '../../slices/orderSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const dispatch = useDispatch();
+  const ingredients = useSelector(orderSelector);
+  const { number } = useParams<{ number: string }>();
 
-  const ingredients: TIngredient[] = [];
+  const order = useSelector((state) =>
+    selectOrderByNumber(state, parseInt(number!))
+  );
 
-  /* Готовим данные для отображения */
+  useEffect(() => {
+    if (!order) {
+      dispatch(orderBurgerThunk(parseInt(number!)));
+    }
+  }, [dispatch, number, order]);
+
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!order || !ingredients.length) {
+      return null;
+    }
 
-    const date = new Date(orderData.createdAt);
+    const date = new Date(order.createdAt);
 
     type TIngredientsWithCount = {
       [key: string]: TIngredient & { count: number };
     };
 
-    const ingredientsInfo = orderData.ingredients.reduce(
+    const ingredientsInfo = order.ingredients.reduce(
       (acc: TIngredientsWithCount, item) => {
         if (!acc[item]) {
           const ingredient = ingredients.find((ing) => ing._id === item);
@@ -52,12 +58,12 @@ export const OrderInfo: FC = () => {
     );
 
     return {
-      ...orderData,
+      ...order,
       ingredientsInfo,
       date,
       total
     };
-  }, [orderData, ingredients]);
+  }, [order, ingredients]);
 
   if (!orderInfo) {
     return <Preloader />;

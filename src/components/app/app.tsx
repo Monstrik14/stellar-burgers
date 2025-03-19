@@ -19,8 +19,6 @@ import { getUserThunk } from '../../slices/userSlice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useDispatch } from '../../services/store';
-import { registerUserApi } from '@api';
-import { setCookie } from '../../utils/cookie';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -28,9 +26,9 @@ export const App = () => {
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
 
-  // useEffect(() => {
-  //   dispatch(getUserThunk());
-  // }, []);
+  useEffect(() => {
+    dispatch(getUserThunk());
+  }, []);
 
   return (
     <div className={styles.app}>
