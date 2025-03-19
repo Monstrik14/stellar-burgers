@@ -10,7 +10,7 @@ export interface IFeedsState {
   orders: TOrder[];
   isFeedsLoading: boolean;
   error: string | null;
-  totalToday: number
+  totalToday: number;
 }
 
 const initialState: IFeedsState = {
@@ -31,7 +31,6 @@ export const feedSlice = createSlice({
     isOrderLoadingSelector: (state) => state.isOrderLoading,
     totalSelector: (state) => state.total,
     totalTodaySelector: (state) => state.totalToday
-    
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -65,4 +64,10 @@ export default feedSlice.reducer;
 
 export const selectedOrders = (state: RootState) => state.feed.orders;
 
-export const { isFeedsLoadingSelector, orderSelector, isOrderLoadingSelector, totalSelector, totalTodaySelector } = feedSlice.selectors;
+export const {
+  isFeedsLoadingSelector,
+  orderSelector,
+  isOrderLoadingSelector,
+  totalSelector,
+  totalTodaySelector
+} = feedSlice.selectors;

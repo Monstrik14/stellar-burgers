@@ -5,27 +5,26 @@ import { useDispatch } from 'react-redux';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
-    
     const dispatch = useDispatch();
 
     const handleMoveDown = () => {
       dispatch({
         type: 'MOVE_INGREDIENT_DOWN',
-        payload: { index },
+        payload: { index }
       });
     };
 
     const handleMoveUp = () => {
       dispatch({
         type: 'MOVE_INGREDIENT_UP',
-        payload: { index },
+        payload: { index }
       });
     };
 
     const handleClose = () => {
       dispatch({
         type: 'REMOVE_INGREDIENT',
-        payload: { index },
+        payload: { index }
       });
     };
 
