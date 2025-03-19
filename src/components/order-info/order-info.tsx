@@ -5,35 +5,31 @@ import { TIngredient } from '@utils-types';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { orderBurgerThunk, orderSelector } from '../../slices/orderSlice';
+import { orderSelector } from '../../slices/orderSlice';
+import { ingredientsSelector } from '../../slices/ingredientsSlice';
+import { getOrderByNumberThunk } from '../../slices/feedSlice';
 
 export const OrderInfo: FC = () => {
   const dispatch = useDispatch();
-  const ingredients = useSelector(orderSelector);
-  const { number } = useParams<{ number: string }>();
-
-  const order = useSelector((state) =>
-    selectOrderByNumber(state, parseInt(number!))
-  );
+  const { number } = useParams();
 
   useEffect(() => {
-    if (!order) {
-      dispatch(orderBurgerThunk(parseInt(number!)));
-    }
-  }, [dispatch, number, order]);
+    dispatch(getOrderByNumberThunk(Number(number)));
+  }, []);
+
+  const orderData = useSelector(orderSelector);
+  const ingredients = useSelector(ingredientsSelector);
 
   const orderInfo = useMemo(() => {
-    if (!order || !ingredients.length) {
-      return null;
-    }
+    if (!orderData || !ingredients.length) return null;
 
-    const date = new Date(order.createdAt);
+    const date = new Date(orderData.createdAt);
 
     type TIngredientsWithCount = {
       [key: string]: TIngredient & { count: number };
     };
 
-    const ingredientsInfo = order.ingredients.reduce(
+    const ingredientsInfo = orderData.ingredients.reduce(
       (acc: TIngredientsWithCount, item) => {
         if (!acc[item]) {
           const ingredient = ingredients.find((ing) => ing._id === item);
@@ -58,12 +54,12 @@ export const OrderInfo: FC = () => {
     );
 
     return {
-      ...order,
+      ...orderData,
       ingredientsInfo,
       date,
       total
     };
-  }, [order, ingredients]);
+  }, [orderData, ingredients]);
 
   if (!orderInfo) {
     return <Preloader />;
