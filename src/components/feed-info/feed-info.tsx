@@ -19,9 +19,8 @@ export const FeedInfo: FC = () => {
     totalToday: useSelector(totalTodaySelector)
   };
 
-  const readyOrders = getOrders(orders, 'done');
-
   const pendingOrders = getOrders(orders, 'pending');
+  const readyOrders = getOrders(orders, 'done');
 
   return (
     <FeedInfoUI

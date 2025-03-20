@@ -13,11 +13,11 @@ import { AppDispatch } from '../../services/store';
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(burgerConstructorSelector);
   const orderRequest = useSelector(isOrderLoadingSelector);
-  const orderModalData = useSelector(orderSelector);
   const isAuthenticated = useSelector(isAuthCheckedSelector);
+  const orderModalData = useSelector(orderSelector);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
     if (!isAuthenticated) {

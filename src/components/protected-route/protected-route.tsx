@@ -1,6 +1,5 @@
-import { Navigate, useLocation } from 'react-router';
-
 import { useSelector } from '../../services/store';
+import { Navigate, useLocation } from 'react-router';
 import {
   isAuthCheckedSelector,
   loginUserRequestSelector

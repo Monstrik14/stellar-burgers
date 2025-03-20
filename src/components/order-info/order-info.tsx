@@ -18,6 +18,7 @@ export const OrderInfo: FC = () => {
   }, []);
 
   const orderData = useSelector(orderSelector);
+
   const ingredients = useSelector(ingredientsSelector);
 
   const orderInfo = useMemo(() => {
