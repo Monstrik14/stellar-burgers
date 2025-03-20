@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -66,6 +65,7 @@ const burgerConstructorSlice = createSlice({
 });
 
 export const { burgerConstructorSelector } = burgerConstructorSlice.selectors;
+
 export const {
   addIngredient,
   upIngredient,
@@ -73,4 +73,5 @@ export const {
   removeIngredient,
   clearBurgerConstructor
 } = burgerConstructorSlice.actions;
+
 export default burgerConstructorSlice.reducer;

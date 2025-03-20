@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   clearErrors,
   errorSelector,
@@ -16,7 +16,7 @@ export const Login: FC = () => {
 
   const navigate = useNavigate();
   const eror = useSelector(errorSelector);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const { values, handleChange } = useForm({

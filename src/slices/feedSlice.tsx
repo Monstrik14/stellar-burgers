@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import { getFeedsApi, getOrderByNumberApi } from '../utils/burger-api';
 import { TOrder } from '../utils/types';
-import { RootState } from '../services/store';
 
 export interface IFeedsState {
   isOrderLoading: boolean;
@@ -22,10 +20,20 @@ const initialState: IFeedsState = {
   totalToday: 0
 };
 
+export const getFeedsThunk = createAsyncThunk('feeds/getFeeds', async () =>
+  getFeedsApi()
+);
+
+export const fetchOrders = createAsyncThunk(
+  'feeds/fetchOrders',
+  async () => await getFeedsApi()
+);
+
 export const feedSlice = createSlice({
   name: 'feeds',
   initialState,
   selectors: {
+    ordersSelector: (state) => state.orders,
     isFeedsLoadingSelector: (state: IFeedsState) => state.isFeedsLoading,
     orderSelector: (state) => state.orders,
     isOrderLoadingSelector: (state) => state.isOrderLoading,
@@ -55,19 +63,13 @@ export const getOrderByNumberThunk = createAsyncThunk(
   async (number: number) => getOrderByNumberApi(number)
 );
 
-export const fetchOrders = createAsyncThunk(
-  'feeds/fetchOrders',
-  async () => await getFeedsApi()
-);
-
 export default feedSlice.reducer;
-
-export const selectedOrders = (state: RootState) => state.feed.orders;
 
 export const {
   isFeedsLoadingSelector,
   orderSelector,
   isOrderLoadingSelector,
   totalSelector,
-  totalTodaySelector
+  totalTodaySelector,
+  ordersSelector
 } = feedSlice.selectors;
