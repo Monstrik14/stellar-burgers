@@ -8,7 +8,6 @@ import {
   loginUserThunk
 } from '../../slices/userSlice';
 import { useForm } from '../../hooks/useForm';
-import { AppDispatch } from 'src/services/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -40,7 +39,7 @@ export const Login: FC = () => {
 
   return (
     <LoginUI
-      errorText=''
+      errorText={eror!}
       email={email}
       setEmail={setEmail}
       password={password}

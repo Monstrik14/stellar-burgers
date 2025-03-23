@@ -7,10 +7,9 @@ import {
   registerUserThunk
 } from '../../slices/userSlice';
 import { useForm } from '../../hooks/useForm';
-import { AppDispatch } from 'src/services/store';
 
 export const Register: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const error = useSelector(errorSelector);
 
   const { values, handleChange } = useForm({
@@ -36,7 +35,7 @@ export const Register: FC = () => {
 
   return (
     <RegisterUI
-      errorText=''
+      errorText={error!}
       email={values.email}
       userName={values.userName}
       password={values.password}
