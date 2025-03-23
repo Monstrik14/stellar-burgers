@@ -24,9 +24,9 @@ export const getFeedsThunk = createAsyncThunk('feeds/getFeeds', async () =>
   getFeedsApi()
 );
 
-export const fetchOrders = createAsyncThunk(
-  'feeds/fetchOrders',
-  async () => await getFeedsApi()
+export const getOrderByNumberThunk = createAsyncThunk(
+  'orders/getOrder',
+  getOrderByNumberApi
 );
 
 export const feedSlice = createSlice({
@@ -43,25 +43,20 @@ export const feedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrders.pending, (state) => {
+      .addCase(getFeedsThunk.pending, (state) => {
         state.isFeedsLoading = true;
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
+      .addCase(getFeedsThunk.rejected, (state, action) => {
         state.isFeedsLoading = false;
         state.error = action.error.message!;
       })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
+      .addCase(getFeedsThunk.fulfilled, (state, action) => {
         state.isFeedsLoading = false;
         state.orders =
           action.payload.orders || 'Ошибка при обнолении ленты заказов';
       });
   }
 });
-
-export const getOrderByNumberThunk = createAsyncThunk(
-  'orders/getOrder',
-  async (number: number) => getOrderByNumberApi(number)
-);
 
 export default feedSlice.reducer;
 

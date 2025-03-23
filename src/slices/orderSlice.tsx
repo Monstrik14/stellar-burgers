@@ -48,8 +48,8 @@ const orderSlice = createSlice({
   }
 });
 
+export default orderSlice.reducer;
+
 export const { clearOrder } = orderSlice.actions;
 
 export const { isOrderLoadingSelector, orderSelector } = orderSlice.selectors;
-
-export default orderSlice.reducer;

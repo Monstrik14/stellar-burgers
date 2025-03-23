@@ -1,12 +1,8 @@
-import { BurgerConstructor } from '@components';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
 import {
-  TypedUseSelectorHook,
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
-
 import burgerConstructor from '../slices/constructorSlice';
 import feeds from '../slices/feedSlice';
 import ingredients from '../slices/ingredientsSlice';

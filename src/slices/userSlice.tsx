@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder, TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../utils/cookie';
-
 import {
   getOrdersApi,
   getUserApi,
@@ -166,6 +165,8 @@ const userSlice = createSlice({
   }
 });
 
+export default userSlice.reducer;
+
 export const { clearErrors } = userSlice.actions;
 
 export const {
@@ -178,5 +179,3 @@ export const {
   ordersRequestSelector,
   errorSelector
 } = userSlice.selectors;
-
-export default userSlice.reducer;
