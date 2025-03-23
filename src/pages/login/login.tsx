@@ -32,7 +32,6 @@ export const Login: FC = () => {
     );
     navigate(from.pathname, { replace: true });
   };
-
   useEffect(() => {
     dispatch(clearErrors());
   }, []);

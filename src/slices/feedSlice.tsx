@@ -30,7 +30,7 @@ export const getOrderByNumberThunk = createAsyncThunk(
 );
 
 export const feedSlice = createSlice({
-  name: 'feeds',
+  name: 'feed',
   initialState,
   selectors: {
     ordersSelector: (state) => state.orders,
