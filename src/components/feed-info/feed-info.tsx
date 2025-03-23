@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
 import { useSelector } from '../../services/store';
@@ -24,9 +23,9 @@ export const FeedInfo: FC = () => {
 
   return (
     <FeedInfoUI
-      readyOrders={readyOrders}
-      pendingOrders={pendingOrders}
       feed={feed}
+      pendingOrders={pendingOrders}
+      readyOrders={readyOrders}
     />
   );
 };
