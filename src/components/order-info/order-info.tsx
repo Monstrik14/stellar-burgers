@@ -7,19 +7,24 @@ import { useDispatch } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { orderSelector } from '../../slices/orderSlice';
 import { ingredientsSelector } from '../../slices/ingredientsSlice';
-import { getOrderByNumberThunk } from '../../slices/feedSlice';
+import {
+  getOrderByNumberThunk,
+  orderInfoSelector
+} from '../../slices/feedSlice';
 
 export const OrderInfo: FC = () => {
   const dispatch = useDispatch();
+  const ingredients = useSelector(ingredientsSelector);
   const { number } = useParams();
+  const orderData = useSelector(orderInfoSelector);
 
   useEffect(() => {
     dispatch(getOrderByNumberThunk(Number(number)));
   }, []);
 
-  const orderData = useSelector(orderSelector);
-
-  const ingredients = useSelector(ingredientsSelector);
+  useEffect(() => {
+    console.log('Params number:', number);
+  }, [number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

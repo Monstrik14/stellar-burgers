@@ -21,11 +21,12 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useDispatch } from '../../services/store';
 
 export const App = () => {
+  console.log('App component loaded');
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
-
+  console.log(backgroundLocation);
   useEffect(() => {
     dispatch(getUserThunk());
   }, []);

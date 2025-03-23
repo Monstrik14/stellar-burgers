@@ -5,14 +5,10 @@ import { useDispatch, useSelector } from '../../services/store';
 import { getOrdersThunk, userOrdersSelector } from '../../slices/userSlice';
 
 export const ProfileOrders: FC = () => {
-  const orders: TOrder[] = useSelector(userOrdersSelector);
   const dispatch = useDispatch();
-
+  const orders: TOrder[] = useSelector(userOrdersSelector);
   useEffect(() => {
-    dispatch({
-      getOrdersThunk,
-      type: ''
-    });
+    dispatch(getOrdersThunk());
   }, []);
 
   return <ProfileOrdersUI orders={orders} />;

@@ -39,7 +39,7 @@ export const Register: FC = () => {
       email={values.email}
       userName={values.userName}
       password={values.password}
-      setUserName={(e) => handleChange('name', e)}
+      setUserName={(e) => handleChange('userName', e)}
       setEmail={(e) => handleChange('email', e)}
       setPassword={(e) => handleChange('password', e)}
       handleSubmit={handleSubmit}
