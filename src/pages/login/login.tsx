@@ -14,31 +14,25 @@ export const Login: FC = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-  const eror = useSelector(errorSelector);
+  const error = useSelector(errorSelector);
   const dispatch = useDispatch();
   const location = useLocation();
-
-  const { values, handleChange } = useForm({
-    email: '',
-    password: ''
-  });
 
   const { from } = location.state || { from: { pathname: '/' } };
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(
-      loginUserThunk({ email: values.email, password: values.password })
-    );
+    dispatch(loginUserThunk({ email, password }));
     navigate(from.pathname, { replace: true });
   };
+
   useEffect(() => {
     dispatch(clearErrors());
   }, []);
 
   return (
     <LoginUI
-      errorText={eror!}
+      errorText={error!}
       email={email}
       setEmail={setEmail}
       password={password}

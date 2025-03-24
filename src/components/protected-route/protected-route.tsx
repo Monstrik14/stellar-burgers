@@ -1,11 +1,11 @@
-import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router';
+
+import { useSelector } from '../../services/store';
 import {
   isAuthCheckedSelector,
   loginUserRequestSelector
 } from '../../slices/userSlice';
 import { Preloader } from '../ui/preloader';
-import { useEffect } from 'react';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
@@ -19,8 +19,6 @@ export const ProtectedRoute = ({
   const isAuthChecked = useSelector(isAuthCheckedSelector);
   const loginUserRequest = useSelector(loginUserRequestSelector);
   const location = useLocation();
-
-  useEffect(() => {}, [isAuthChecked, loginUserRequest]);
 
   if (!isAuthChecked && loginUserRequest) {
     return <Preloader />;
