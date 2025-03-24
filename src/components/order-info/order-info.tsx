@@ -21,9 +21,7 @@ export const OrderInfo: FC = () => {
     dispatch(getOrderByNumberThunk(Number(number)));
   }, []);
 
-  useEffect(() => {
-    console.log('Params number:', number);
-  }, [number]);
+  useEffect(() => {}, [number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

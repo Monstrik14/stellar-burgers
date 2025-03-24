@@ -158,7 +158,6 @@ const userSlice = createSlice({
         state.ordersRequest = false;
       })
       .addCase(getOrdersThunk.fulfilled, (state, action) => {
-        console.log('Fulfilled payload:', action.payload);
         state.orders = action.payload;
         state.ordersRequest = false;
       });

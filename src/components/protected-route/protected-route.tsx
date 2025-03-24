@@ -20,10 +20,7 @@ export const ProtectedRoute = ({
   const loginUserRequest = useSelector(loginUserRequestSelector);
   const location = useLocation();
 
-  useEffect(() => {
-    console.log('ProtectedRoute: isAuthChecked =', isAuthChecked);
-    console.log('ProtectedRoute: loginUserRequest =', loginUserRequest);
-  }, [isAuthChecked, loginUserRequest]);
+  useEffect(() => {}, [isAuthChecked, loginUserRequest]);
 
   if (!isAuthChecked && loginUserRequest) {
     return <Preloader />;
