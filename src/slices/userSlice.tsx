@@ -19,7 +19,6 @@ export interface UserState {
   orders: TOrder[];
   ordersRequest: boolean;
   error: string | null;
-
 }
 
 export const initialState: UserState = {
@@ -28,7 +27,7 @@ export const initialState: UserState = {
   user: null,
   orders: [],
   ordersRequest: false,
-  error: null,
+  error: null
 };
 
 export const loginUserThunk = createAsyncThunk(

@@ -5,7 +5,6 @@ import { TIngredient } from '@utils-types';
 import { useSelector } from '../../services/store';
 import { useDispatch } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { orderSelector } from '../../slices/orderSlice';
 import { ingredientsSelector } from '../../slices/ingredientsSlice';
 import {
   getOrderByNumberThunk,
