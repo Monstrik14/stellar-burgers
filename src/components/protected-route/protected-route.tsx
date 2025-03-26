@@ -1,22 +1,19 @@
 import { Navigate, useLocation } from 'react-router';
 
 import { useSelector } from '../../services/store';
-import {
-  isAuthCheckedSelector,
-  loginUserRequestSelector,
-  userSelector
-} from '../../slices/userSlice';
+import { isAuthCheckedSelector, userSelector } from '../../slices/userSlice';
 import { Preloader } from '../ui/preloader';
+import { R } from '@storybook/react/dist/types-0fc72a6d';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
-  component: JSX.Element;
+  children?: React.ReactElement;
 };
 
 export const ProtectedRoute = ({
   onlyUnAuth = false,
-  component
-}: ProtectedRouteProps): JSX.Element => {
+  children
+}: ProtectedRouteProps) => {
   const isAuthChecked = useSelector(isAuthCheckedSelector);
   const location = useLocation();
   const user = useSelector(userSelector);
@@ -33,5 +30,5 @@ export const ProtectedRoute = ({
     const { from } = location.state?.from || { pathname: '/' };
     return <Navigate to={from} />;
   }
-  return component;
+  return children;
 };

@@ -15,10 +15,10 @@ import {
   NotFound404
 } from '@pages';
 
-import { getUserThunk, isAuthCheckedSelector } from '../../slices/userSlice';
+import { getUserThunk } from '../../slices/userSlice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch } from '../../services/store';
 
 export const App = () => {
   console.log('App component loaded');
