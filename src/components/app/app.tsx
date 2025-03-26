@@ -15,10 +15,10 @@ import {
   NotFound404
 } from '@pages';
 
-import { getUserThunk } from '../../slices/userSlice';
+import { getUserThunk, isAuthCheckedSelector } from '../../slices/userSlice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const App = () => {
   console.log('App component loaded');
@@ -118,9 +118,14 @@ export const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title={'Информация о заказе'} onClose={() => navigate(-1)}>
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Modal
+                  title={'Информация о заказе'}
+                  onClose={() => navigate(-1)}
+                >
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>

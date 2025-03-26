@@ -7,7 +7,6 @@ import {
   errorSelector,
   loginUserThunk
 } from '../../slices/userSlice';
-import { useForm } from '../../hooks/useForm';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
