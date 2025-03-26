@@ -1,7 +1,7 @@
 import '../../index.css';
 import styles from './app.module.css';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Children, useEffect } from 'react';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import {
   ConstructorPage,
@@ -15,10 +15,14 @@ import {
   NotFound404
 } from '@pages';
 
-import { getUserThunk } from '../../slices/userSlice';
+import {
+  getUserThunk,
+  isAuthCheckedSelector
+  // checkUserAuthThunk
+} from '../../slices/userSlice';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const App = () => {
   console.log('App component loaded');
@@ -27,9 +31,13 @@ export const App = () => {
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
   console.log(backgroundLocation);
+
   useEffect(() => {
     dispatch(getUserThunk());
   }, []);
+  // useEffect(() => {
+  //   dispatch(checkUserAuthThunk());
+  // }, [dispatch]);
 
   return (
     <div className={styles.app}>

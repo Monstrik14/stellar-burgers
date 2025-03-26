@@ -6,6 +6,7 @@ import { getOrdersThunk, userOrdersSelector } from '../../slices/userSlice';
 
 export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
+
   const orders: TOrder[] = useSelector(userOrdersSelector);
   useEffect(() => {
     dispatch(getOrdersThunk());

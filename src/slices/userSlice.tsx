@@ -23,7 +23,7 @@ export interface UserState {
 
 export const initialState: UserState = {
   isAuthenticated: false,
-  loginUserRequest: false,
+  loginUserRequest: true,
   user: null,
   orders: [],
   ordersRequest: false,
@@ -107,7 +107,6 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(registerUserThunk.pending, (state) => {
-        state.isAuthenticated = false;
         state.loginUserRequest = true;
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
@@ -121,6 +120,14 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(logoutUserThunk.pending, (state) => {
+        state.loginUserRequest = true;
+        state.error = null;
+      })
+      .addCase(logoutUserThunk.rejected, (state, action) => {
+        state.loginUserRequest = false;
+        state.error = action.error.message!;
+      })
+      .addCase(logoutUserThunk.fulfilled, (state) => {
         state.user = null;
         state.loginUserRequest = false;
         state.isAuthenticated = false;
