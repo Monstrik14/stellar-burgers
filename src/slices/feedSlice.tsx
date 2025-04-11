@@ -84,7 +84,7 @@ export interface IFeedsState {
   orderInfo: TOrder | null;
 }
 
-const initialState: IFeedsState = {
+export const initialState: IFeedsState = {
   orders: [],
   isOrderLoading: false,
   isFeedsLoading: false,
