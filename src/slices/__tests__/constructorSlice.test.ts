@@ -3,17 +3,12 @@ import constructorReducer, {
   removeIngredient,
   upIngredient,
   downIngredient,
+  initialState
 } from '../constructorSlice';
 import { TConstructorIngredient } from '@utils-types';
 
 describe('constructorSlice', () => {
-  const initialState = {
-    burgerConstructor: {
-      bun: null,
-      ingredients: []
-    },
-    error: null
-  };
+  initialState
 
   const mockBun: TConstructorIngredient = {
     id: 'uuid1',
